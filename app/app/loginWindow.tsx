@@ -4,10 +4,10 @@ import { useState } from "react";
 
 export default function LoginWindow(
   { setUpProfile }: {
-    setUpProfile:  (form: FormData) => Promise<void>;
+    setUpProfile: (form: FormData) => Promise<void>;
   }
 ) {
-
+  const [errorState, setErrorState] = useState('')
   /* 
     TODO #1: Add a state variable to store the current error message
   */
@@ -19,10 +19,16 @@ export default function LoginWindow(
     @param form - FormData object containing the username and name of the new user
   */
   const onSubmit = async (form: FormData) => {
-    /* 
+    /* e
       TODO #3: Set the error state to an empty string
     */
-
+    setErrorState('')
+    try {
+      await setUpProfile(form)     
+    }
+    catch (e: Error) {
+      setErrorState(e.message)
+    }
     /* 
       TODO #4: Set up a try catch block to call the setUpProfile() function and set the error state
       if an error is thrown
